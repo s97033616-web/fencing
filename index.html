@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Fencing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        
+        <div id="lobby-layer">
+            <h1>FENCING GAME</h1>
+            <input type="text" id="nickname-input" placeholder="닉네임을 입력하세요" maxlength="8">
+    
+            <div class="difficulty-selection">
+                <button class="diff-btn active" data-level="easy">Novice-Bot (Easy)</button>
+                <button class="diff-btn" data-level="hard">Alpha-Fencer (Hard)</button>
+            </div>
+
+            <button id="start-game-btn">GAME START</button>
+        </div>
+
+        <div id="ui-layer">
+            <h2 id="winner-text">RESULT</h2>
+            <p id="restart-hint" style="color: #888; font-size: 16px; margin-top: 10px;"></p>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+
+        <div id="ready-layer">
+            <h2 id="round-result-text">득점!</h2>
+            <button id="ready-btn">READY</button>
+            <p id="ai-ready-status">AI 상태 대기 중...</p>
+        </div>
+
+        <div class="controls-info">P1: A,D (Move), W (Attack) | P2: AI (Auto)</div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
