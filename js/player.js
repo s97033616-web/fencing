@@ -2,20 +2,22 @@ export class Player {
     constructor(x, y, color, controls, direction) {
         this.x = x;
         this.y = y;
-        this.width = 40;
-        this.height = 80;
+        this.width = 60;  // 이미지 비율에 맞춰 조정
+        this.height = 120; 
         this.color = color;
-        this.controls = controls; // { left: 'KeyA', right: 'KeyD', attack: 'Space' }
+        this.controls = controls;
         this.direction = direction;
         
-        this.speed = 5;
-        this.swordLength = 60;
+        // 이미지 로드
+        this.image = new Image();
+        this.image.src = 'images/1.png'; // 플레이어 이미지
 
-        // 공격 관련 속성만 유지
+        this.speed = 5;
+        this.swordLength = 70;
         this.isAttacking = false;
         this.canAttack = true;
-        this.attackDuration = 100; // 0.1초 공격
-        this.cooldownTime = 400;   // 0.4초 쿨타임
+        this.attackDuration = 100;
+        this.cooldownTime = 400;
     }
 
     update(input, canvasWidth) {
@@ -44,20 +46,21 @@ export class Player {
     }
 
     draw(ctx) {
-        // 몸체
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.canAttack ? 1.0 : 0.6; // 쿨타임 시 반투명
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.globalAlpha = 1.0;
+        // 캐릭터 이미지 그리기
+        ctx.save();
+        ctx.globalAlpha = this.canAttack ? 1.0 : 0.6;
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        ctx.restore();
 
-        // 칼 (항상 가로 방향)
-        const currentSword = this.isAttacking ? this.swordLength : 15;
-        ctx.strokeStyle = this.isAttacking ? '#ff3300' : '#333';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        const swordStartX = this.direction === 1 ? this.x + this.width : this.x;
-        ctx.moveTo(swordStartX, this.y + 30);
-        ctx.lineTo(swordStartX + (currentSword * this.direction), this.y + 30);
-        ctx.stroke();
+        // 칼 (공격 시 시각 효과)
+        if (this.isAttacking) {
+            ctx.strokeStyle = '#ff3300';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            const swordStartX = this.x + this.width - 10; // 이미지 손 위치에 맞게 조정
+            ctx.moveTo(swordStartX, this.y + 60);
+            ctx.lineTo(swordStartX + this.swordLength, this.y + 60);
+            ctx.stroke();
+        }
     }
 }
